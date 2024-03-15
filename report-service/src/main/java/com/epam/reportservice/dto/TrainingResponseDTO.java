@@ -1,37 +1,22 @@
-package com.epam.reportservice.entity;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+package com.epam.reportservice.dto;
 
 import java.util.Map;
 
-@Document(collection = "trainer_summaries")
-public class TrainerSummary {
-    @Id
-    private String id;
+public class TrainingResponseDTO {
     private String username;
     private String firstName;
     private String lastName;
     private boolean status;
     private Map<Integer, Map<Integer, Long>> years;
 
-    public TrainerSummary(){}
+    public TrainingResponseDTO(){}
 
-    public TrainerSummary(String id, String username, String firstName, String lastName, boolean status, Map<Integer, Map<Integer, Long>> years) {
-        this.id = id;
+    public TrainingResponseDTO(String username, String firstName, String lastName, boolean status, Map<Integer, Map<Integer, Long>> years) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
         this.years = years;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getUsername() {
