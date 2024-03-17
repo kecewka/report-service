@@ -18,13 +18,13 @@ public class TrainerSummaryController {
     }
 
     @PostMapping("/trainings/records")
-    public void recordTraining(TrainingRequestDTO dto) {
-
+    public void recordTraining(@RequestBody TrainingRequestDTO dto) {
+        reportService.saveTrainingRequest(dto);
     }
 
     @GetMapping("trainings/records/{username}")
     public TrainingResponseDTO getSummary(@PathVariable String username) {
-        return null;
+        return reportService.getTrainingsReport(username);
     }
 
 

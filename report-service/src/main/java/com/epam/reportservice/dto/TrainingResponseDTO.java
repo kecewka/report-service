@@ -7,16 +7,16 @@ public class TrainingResponseDTO {
     private String firstName;
     private String lastName;
     private boolean status;
-    private Map<Integer, Map<Integer, Long>> years;
+    private Map<Integer, Map<Integer, Long>> summary;
 
     public TrainingResponseDTO(){}
 
-    public TrainingResponseDTO(String username, String firstName, String lastName, boolean status, Map<Integer, Map<Integer, Long>> years) {
+    public TrainingResponseDTO(String username, String firstName, String lastName, boolean status, Map<Integer, Map<Integer, Long>> summary) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
-        this.years = years;
+        this.summary = summary;
     }
 
     public String getUsername() {
@@ -51,11 +51,11 @@ public class TrainingResponseDTO {
         this.status = status;
     }
 
-    public Map<Integer, Map<Integer, Long>> getYears() {
-        return years;
+    public Map<Integer, Map<Integer, Long>> getSummary() {
+        return summary;
     }
 
-    public void setYears(Map<Integer, Map<Integer, Long>> years) {
-        this.years = years;
+    public void setSummary(Map<Integer, Map<Integer, Long>> summary) {
+        this.summary = summary;
     }
 }

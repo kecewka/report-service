@@ -13,17 +13,17 @@ public class TrainerSummary {
     private String firstName;
     private String lastName;
     private boolean status;
-    private Map<Integer, Map<Integer, Long>> years;
+    private Map<Integer, Map<Integer, Long>> summary;
 
     public TrainerSummary(){}
 
-    public TrainerSummary(String id, String username, String firstName, String lastName, boolean status, Map<Integer, Map<Integer, Long>> years) {
+    public TrainerSummary(String id, String username, String firstName, String lastName, boolean status, Map<Integer, Map<Integer, Long>> summary) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.status = status;
-        this.years = years;
+        this.summary = summary;
     }
 
     public String getId() {
@@ -66,11 +66,11 @@ public class TrainerSummary {
         this.status = status;
     }
 
-    public Map<Integer, Map<Integer, Long>> getYears() {
-        return years;
+    public Map<Integer, Map<Integer, Long>> getSummary() {
+        return summary;
     }
 
-    public void setYears(Map<Integer, Map<Integer, Long>> years) {
-        this.years = years;
+    public void setSummary(Map<Integer, Map<Integer, Long>> summary) {
+        this.summary = summary;
     }
 }
