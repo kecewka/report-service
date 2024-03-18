@@ -12,11 +12,11 @@ import com.epam.reportservice.repository.TrainingsRepository;
 import com.epam.reportservice.service.ReportService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -37,23 +37,27 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void saveTrainingRequest(TrainingRequestDTO dto) {
-        LOGGER.info("saving the Training");
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Saving the Training", transactionId);
         TrainingRequest trainingRequest = trainingRequestMapper.toEntity(dto);
         trainingsRepository.save(trainingRequest);
         updateSummary(dto);
-        LOGGER.info("training saved");
+        LOGGER.info("[Transaction ID: {}] Training Saved", transactionId);
 
     }
 
     @Override
     public TrainingResponseDTO getTrainingsReport(String username) {
-        LOGGER.info("getting reports for trainer: {}", username);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Getting the report for trainer with username: {}", transactionId, username);
         TrainerSummary trainerSummary = trainerSummaryRepository.findByUsername(username);
 
         return trainingSummaryMapper.toDTO(trainerSummary);
     }
 
     public void updateSummary(TrainingRequestDTO dto) {
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Updating the summary for trainer with username: {}", transactionId, dto.getUsername());
         TrainerSummary summary = trainerSummaryRepository.findByUsername(dto.getUsername());
         if (summary == null) {
             summary = trainingSummaryMapper.requestToSummary(dto);
@@ -72,10 +76,13 @@ public class ReportServiceImpl implements ReportService {
          summary.getSummary().get(year).merge(month, calculateDuration(dto), Long::sum);
 
         trainerSummaryRepository.save(summary);
+        LOGGER.info("[Transaction ID: {}] Summary for trainer {} has been updated", transactionId, dto.getUsername());
     }
 
     @Override
     public long calculateDuration(TrainingRequestDTO dto) {
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Calculating Durations", transactionId);
         return dto.getActionType() == ActionType.ADD ? dto.getTrainingDuration() : -dto.getTrainingDuration();
     }
 }
