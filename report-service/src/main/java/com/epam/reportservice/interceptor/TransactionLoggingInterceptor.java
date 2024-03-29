@@ -17,7 +17,8 @@ public class TransactionLoggingInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String transactionId = request.getHeader("transactionId");
-        if(transactionId == null) {
+        String mdcTransactionId = MDC.get("transactionId");
+        if(transactionId == null && mdcTransactionId == null) {
             transactionId = UUID.randomUUID().toString();
         }
 
