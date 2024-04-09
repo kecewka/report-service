@@ -1,11 +1,16 @@
 package com.epam.reportservice.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 
 @Document(collection = "trainer_summaries")
+@CompoundIndexes({
+        @CompoundIndex(name = "firstname_lastname_index", def = "{'firstName' : 1, 'lastName' : 1}")
+})
 public class TrainerSummary {
     @Id
     private String id;
@@ -15,7 +20,8 @@ public class TrainerSummary {
     private boolean status;
     private Map<Integer, Map<Integer, Long>> summary;
 
-    public TrainerSummary(){}
+    public TrainerSummary() {
+    }
 
     public TrainerSummary(String id, String username, String firstName, String lastName, boolean status, Map<Integer, Map<Integer, Long>> summary) {
         this.id = id;
