@@ -40,7 +40,7 @@ public class ReportServiceImpl implements ReportService {
         String transactionId = MDC.get("transactionId");
         LOGGER.info("[Transaction ID: {}] Saving the Training", transactionId);
         TrainingRequest trainingRequest = trainingRequestMapper.toEntity(dto);
-        trainingsRepository.save(trainingRequest);
+        //trainingsRepository.save(trainingRequest);
         updateSummary(dto);
         LOGGER.info("[Transaction ID: {}] Training Saved", transactionId);
 
@@ -72,8 +72,8 @@ public class ReportServiceImpl implements ReportService {
 //        for (int i = 1; i <= 12; i++) {
 //            yearSummary.putIfAbsent(i, 0L);
 //        }
-        
-         summary.getSummary().get(year).merge(month, calculateDuration(dto), Long::sum);
+
+        summary.getSummary().get(year).merge(month, calculateDuration(dto), Long::sum);
 
         trainerSummaryRepository.save(summary);
         LOGGER.info("[Transaction ID: {}] Summary for trainer {} has been updated", transactionId, dto.getUsername());

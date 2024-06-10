@@ -1,14 +1,14 @@
 package com.epam.reportservice.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.annotation.Id;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Document(collection = "trainer_trainings")
+//@Document(collection = "trainer_trainings")
 public class TrainingRequest {
-    @Id
+    //@Id
     private String id;
     private String username;
     private String firstName;
