@@ -6,12 +6,12 @@ public class TrainingResponseDTO {
     private String username;
     private String firstName;
     private String lastName;
-    private boolean status;
+    private String status;
     private Map<Integer, Map<Integer, Long>> summary;
 
     public TrainingResponseDTO(){}
 
-    public TrainingResponseDTO(String username, String firstName, String lastName, boolean status, Map<Integer, Map<Integer, Long>> summary) {
+    public TrainingResponseDTO(String username, String firstName, String lastName, String status, Map<Integer, Map<Integer, Long>> summary) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,11 +43,11 @@ public class TrainingResponseDTO {
         this.lastName = lastName;
     }
 
-    public boolean isStatus() {
+    public String isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

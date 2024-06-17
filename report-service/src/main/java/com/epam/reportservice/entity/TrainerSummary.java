@@ -1,30 +1,27 @@
 package com.epam.reportservice.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.index.CompoundIndexes;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 
 import java.util.Map;
 
-@Document(collection = "trainer_summaries")
-@CompoundIndexes({
-        @CompoundIndex(name = "firstname_lastname_index", def = "{'firstName' : 1, 'lastName' : 1}")
-})
+@DynamoDbBean
 public class TrainerSummary {
-    @Id
-    private String id;
+
     private String username;
+
     private String firstName;
+
     private String lastName;
-    private boolean status;
+
+    private String status;
+
     private Map<Integer, Map<Integer, Long>> summary;
 
     public TrainerSummary() {
     }
 
-    public TrainerSummary(String id, String username, String firstName, String lastName, boolean status, Map<Integer, Map<Integer, Long>> summary) {
-        this.id = id;
+    public TrainerSummary(String username, String firstName, String lastName, String status, Map<Integer, Map<Integer, Long>> summary) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,14 +29,9 @@ public class TrainerSummary {
         this.summary = summary;
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
+    @DynamoDbPartitionKey
+    @DynamoDbAttribute("username")
     public String getUsername() {
         return username;
     }
@@ -48,6 +40,8 @@ public class TrainerSummary {
         this.username = username;
     }
 
+    @DynamoDbAttribute("firstName")
+    @DynamoDbSecondaryPartitionKey(indexNames = {"TrainerName-Index"})
     public String getFirstName() {
         return firstName;
     }
@@ -55,7 +49,8 @@ public class TrainerSummary {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
+    @DynamoDbAttribute("lastName")
+    @DynamoDbSecondarySortKey(indexNames = {"TrainerName-Index"})
     public String getLastName() {
         return lastName;
     }
@@ -64,14 +59,16 @@ public class TrainerSummary {
         this.lastName = lastName;
     }
 
-    public boolean isStatus() {
+    @DynamoDbSortKey
+    @DynamoDbAttribute("status")
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
-
+    @DynamoDbAttribute("summary")
     public Map<Integer, Map<Integer, Long>> getSummary() {
         return summary;
     }
